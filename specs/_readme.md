@@ -17,3 +17,4 @@ This directory is the source of truth for implementation scope in this repositor
 - Runtime requirement: use Python `3.10` to `3.12` for TensorFlow compatibility on Windows (Python `3.13+` unsupported for this project setup).
 - Dataset root is configurable via CLI (`--dataset-root`) or env var (`KITTI_DATASET_ROOT`) rather than requiring in-repo placement.
 - Training supports speed-oriented overrides (`--quick`, epoch overrides, `--max-samples`, `--skip-fine-tune`, `--input-size`, `--workers`) to make CPU iteration practical.
+- Git publishing workflow requires creating the GitHub repository first, then configuring `origin` and pushing local `main`.
