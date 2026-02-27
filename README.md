@@ -123,3 +123,30 @@ Default output:
 - Low-confidence predictions are skipped using configurable confidence threshold.
 - Inference preserves original FPS and resolution.
 - All paths and hyperparameters are centralized in `config/config.py`.
+
+## YOLO Multi-Object Inference (Recommended for all objects per frame)
+
+This path uses pretrained YOLO weights and detects multiple objects per frame.
+It maps COCO labels to project labels:
+
+- `car` -> `Car`
+- `person` -> `Pedestrian`
+- `bicycle` -> `Cyclist`
+
+Run:
+
+```bash
+python scripts/run_yolo_inference.py --input "path/to/video.mp4"
+```
+
+Optional args:
+
+- `--weights yolov8n.pt`
+- `--output outputs/videos/annotated_output_yolo.mp4`
+- `--confidence 0.3`
+- `--iou 0.45`
+- `--imgsz 640`
+- `--device cpu`
+
+Note: first run may download YOLO weights automatically.
+

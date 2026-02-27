@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Tuple
 
 import cv2
 import tensorflow as tf
@@ -15,6 +15,21 @@ from inference.utils import draw_bbox, postprocess_prediction, preprocess_frame
 
 
 LOGGER = logging.getLogger(__name__)
+
+
+def _get_model_input_size(model: tf.keras.Model) -> Tuple[int, int]:
+    """Extract (width, height) expected by the loaded model."""
+    input_shape = model.input_shape
+    if not isinstance(input_shape, tuple) or len(input_shape) != 4:
+        raise ValueError(f"Unexpected model input shape: {input_shape}")
+
+    _, height, width, channels = input_shape
+    if channels != 3:
+        raise ValueError(f"Expected RGB model with 3 channels, got: {channels}")
+    if height is None or width is None:
+        raise ValueError(f"Dynamic model input shape is not supported: {input_shape}")
+
+    return int(width), int(height)
 
 
 def run_video_inference(
@@ -42,6 +57,8 @@ def run_video_inference(
 
     LOGGER.info("Loading model: %s", model_file)
     model = tf.keras.models.load_model(model_file)
+    model_input_size = _get_model_input_size(model)
+    LOGGER.info("Model input size detected: %dx%d", model_input_size[0], model_input_size[1])
 
     capture = cv2.VideoCapture(str(input_video))
     if not capture.isOpened():
@@ -80,9 +97,7 @@ def run_video_inference(
             if not ret:
                 break
 
-            model_input = preprocess_frame(
-                frame=frame, input_size=(config.input_width, config.input_height)
-            )
+            model_input = preprocess_frame(frame=frame, input_size=model_input_size)
             class_pred, bbox_pred = model.predict(model_input, verbose=0)
 
             detection = postprocess_prediction(
