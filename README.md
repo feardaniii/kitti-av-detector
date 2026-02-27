@@ -150,3 +150,23 @@ Optional args:
 
 Note: first run may download YOLO weights automatically.
 
+
+## Final Results
+
+Final long-video inference command used:
+
+```bash
+python scripts/run_yolo_inference.py --input "testingvideos/1/Crashes caught on Seattle traffic cameras #14! - SeattleTraffic Cams (720p, h264).mp4" --output "outputs/videos/annotated_seattle_long.mp4" --weights yolov8s.pt --imgsz 640 --confidence 0.25 --iou 0.5 --device cpu
+```
+
+Final short-video inference command used:
+
+```bash
+python scripts/run_yolo_inference.py --input "testingvideos/2/FASTEST AMBULANCE EVER! - HyperXZ (720p, h264).mp4" --output "outputs/videos/annotated_ambulance_test.mp4" --weights yolov8s.pt --imgsz 640 --confidence 0.25 --iou 0.5 --device cpu
+```
+
+Final output videos used for review:
+
+- `outputs/videos/annotated_seattle_long_fixed.mp4`
+- `outputs/videos/annotated_ambulance_test_fixed.mp4`
+

@@ -19,4 +19,6 @@ This directory is the source of truth for implementation scope in this repositor
 - Inference auto-detects model input size from the saved Keras model to avoid training/inference shape mismatches.
 - Added pretrained YOLO inference path for multi-object per-frame detection (Car/Pedestrian/Cyclist mapping) to satisfy full-scene annotation requirement.
 - YOLO inference includes a person+bicycle overlap relabel rule to reduce cyclist-to-pedestrian misclassification.
+- README includes final reproducible YOLO inference commands and output artifact paths for submission.
+- README final commands use repository-relative video paths for portability across different local directories.
 
